@@ -1,0 +1,12 @@
+<h2>🛒 Carrito de Compras</h2>
+<div *ngIf="cartItems.length === 0">Tu carrito está vacío.</div>
+
+<div *ngIf="cartItems.length > 0" class="cart-grid">
+  <div *ngFor="let item of cartItems" class="cart-item">
+    <img [src]="item.image" alt="{{ item.title }}" />
+    <h3>{{ item.title }}</h3>
+    <p class="price">{{ item.price | currency }}</p>
+  </div>
+</div>
+
+<button mat-button color="warn" (click)="clearCart()">Vaciar Carrito</button>

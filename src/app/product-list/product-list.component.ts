@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../services/product.service';
+import { CartService } from '../services/cart.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination'; // Importa el módulo de paginación
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, FormsModule, NgxPaginationModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, FormsModule, NgxPaginationModule], // Agrega NgxPaginationModule aquí
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
@@ -18,10 +19,14 @@ export class ProductListComponent implements OnInit {
   filteredProducts: any[] = [];
   error: string = '';
   searchTerm: string = '';
-  page: number = 1;
+  page: number = 1; 
+  itemsPerPage: number = 6; 
   pageSize: number = 10;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit() {
     this.loadProducts();
@@ -47,6 +52,7 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(product: any) {
+    this.cartService.addToCart(product);
     alert(`Producto agregado al carrito: ${product.title}`);
   }
 }
