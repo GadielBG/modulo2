@@ -1,0 +1,92 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Contenedor de paginación */
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  /* Cuadrícula de productos */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 30px;
+    justify-items: center;
+  }
+  
+  /* Tarjetas de productos */
+  .product-card {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.3s;
+    background: white;
+    padding: 15px;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Imagen del producto */
+  .product-card img {
+    max-height: 220px;
+    object-fit: contain;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Precio */
+  .price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  /* Cuadro de búsqueda */
+  .search-box {
+    width: 100%;
+    max-width: 450px;
+    padding: 12px;
+    margin: 20px auto;
+    display: block;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Botón de agregar al carrito */
+  .mat-mdc-button {
+    background-color: #007bff !important;
+    color: white !important;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .mat-mdc-button:hover {
+    background-color: #0056b3 !important;
+    transform: scale(1.05);
+  }
+  
+  /* Mensaje de error */
+  .error {
+    color: red;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
