@@ -5,14 +5,14 @@ body {
     margin: 0;
     padding: 0;
   }
-  
+
   /* Contenedor de paginación */
   .pagination-container {
     display: flex;
     justify-content: center;
     margin: 20px 0;
   }
-  
+
   /* Cuadrícula de productos */
   .product-grid {
     display: grid;
@@ -21,7 +21,7 @@ body {
     padding: 30px;
     justify-items: center;
   }
-  
+
   /* Tarjetas de productos */
   .product-card {
     width: 100%;
@@ -33,12 +33,12 @@ body {
     background: white;
     padding: 15px;
   }
-  
+
   .product-card:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   }
-  
+
   /* Imagen del producto */
   .product-card img {
     max-height: 220px;
@@ -46,14 +46,14 @@ body {
     padding: 10px;
     border-bottom: 1px solid #ddd;
   }
-  
+
   /* Precio */
   .price {
     font-size: 1.2rem;
     font-weight: bold;
     color: #007bff;
   }
-  
+
   /* Cuadro de búsqueda */
   .search-box {
     width: 100%;
@@ -66,7 +66,7 @@ body {
     border-radius: 8px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
   }
-  
+
   /* Botón de agregar al carrito */
   .mat-mdc-button {
     background-color: #007bff !important;
@@ -76,12 +76,12 @@ body {
     border-radius: 8px;
     transition: background 0.3s, transform 0.2s;
   }
-  
+
   .mat-mdc-button:hover {
     background-color: #0056b3 !important;
     transform: scale(1.05);
   }
-  
+
   /* Mensaje de error */
   .error {
     color: red;
@@ -93,7 +93,7 @@ body {
     text-align: center;
     margin-top: 20px;
   }
-  
+
   .cart-button {
     display: inline-block;
     padding: 10px 15px;
@@ -102,8 +102,7 @@ body {
     text-decoration: none;
     border-radius: 5px;
   }
-  
+
   .cart-button:hover {
     background-color: #0056b3;
   }
-  

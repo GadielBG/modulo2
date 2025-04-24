@@ -1,14 +1,14 @@
 <div class="pagination-container">
     <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
-  
+
   <div>
     <input [(ngModel)]="searchTerm" (input)="filterProducts()" placeholder="Buscar producto..." class="search-box" />
   </div>
   <div *ngIf="error" class="error">{{ error }}</div>
   <div *ngIf="!error" class="product-grid">
     <mat-card *ngFor="let product of filteredProducts | paginate: { itemsPerPage: pageSize, currentPage: page }" class="product-card">
-      <img mat-card-image [src]="product.image" alt="{{ product.title }}" />
+      <img mat-card-image [src]="product.image" alt="{{ product.title }}" loading="lazy"/>
       <mat-card-title>{{ product.title }}</mat-card-title>
       <mat-card-content>
         <p class="price">{{ product.price | currency }}</p>
@@ -16,12 +16,12 @@
       <button mat-button color="primary" (click)="addToCart(product)">Agregar al carrito</button>
     </mat-card>
   </div>
-  
+
   <!-- Controles de paginación al final -->
   <div class="pagination-container">
     <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
-  
+
   <!-- Enlace a la página del carrito -->
   <div class="cart-link">
     <a routerLink="/cart">🛒 Ver carrito</a>
@@ -30,4 +30,3 @@
 <div class="cart-link">
     <a routerLink="/cart" class="cart-button">🛒 Ver carrito</a>
   </div>
-  
