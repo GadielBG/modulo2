@@ -1,32 +1,98 @@
-<div class="pagination-container">
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+<div class="store-container">
+  <!-- Header con filtros y búsqueda -->
+  <div class="store-header">
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar productos</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (input)="filterProducts()" placeholder="Ej: smartphone, laptop...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <!-- Filtros por categoría -->
+    <div class="category-filters">
+      <button mat-stroked-button
+              [class.active]="selectedCategory === ''"
+              (click)="filterByCategory('')">
+        Todos
+      </button>
+      <button *ngFor="let category of categories"
+              mat-stroked-button
+              [class.active]="selectedCategory === category"
+              (click)="filterByCategory(category)">
+        {{category | titlecase}}
+      </button>
+    </div>
   </div>
 
-  <div>
-    <input [(ngModel)]="searchTerm" (input)="filterProducts()" placeholder="Buscar producto..." class="search-box" />
+  <!-- Mensaje de error -->
+  <div *ngIf="error" class="error-container">
+    <mat-icon>error</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadProducts()">Reintentar</button>
   </div>
-  <div *ngIf="error" class="error">{{ error }}</div>
-  <div *ngIf="!error" class="product-grid">
-    <mat-card *ngFor="let product of filteredProducts | paginate: { itemsPerPage: pageSize, currentPage: page }" class="product-card">
-      <img mat-card-image [src]="product.image" alt="{{ product.title }}" loading="lazy"/>
-      <mat-card-title>{{ product.title }}</mat-card-title>
+
+  <!-- Loader mientras carga -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Cargando productos...</p>
+  </div>
+
+  <!-- Sin resultados -->
+  <div *ngIf="!loading && !error && filteredProducts.length === 0" class="no-results">
+    <mat-icon>search_off</mat-icon>
+    <p>No se encontraron productos que coincidan con "{{searchTerm}}"</p>
+    <button mat-stroked-button (click)="clearFilters()">Limpiar filtros</button>
+  </div>
+
+  <!-- Resultados de productos -->
+  <div *ngIf="!loading && !error && filteredProducts.length > 0" @staggerAnimation class="product-grid">
+    <mat-card *ngFor="let product of filteredProducts | paginate: { itemsPerPage: pageSize, currentPage: page }"
+              class="product-card" @fadeAnimation>
+      <div class="product-image-container">
+        <img mat-card-image [src]="product.image" alt="{{ product.title }}" loading="lazy"/>
+        <div class="product-category">{{product.category | titlecase}}</div>
+      </div>
+
       <mat-card-content>
-        <p class="price">{{ product.price | currency }}</p>
+        <h3 class="product-title" [matTooltip]="product.title">{{ product.title | slice:0:40 }}{{product.title.length > 40 ? '...' : ''}}</h3>
+        <div class="product-details">
+          <p class="price">{{ product.price | currency }}</p>
+          <div class="rating">
+            <mat-icon class="star" *ngFor="let star of getStars(product.rating?.rate || 0)">
+              {{star === 1 ? 'star' : (star === 0.5 ? 'star_half' : 'star_border')}}
+            </mat-icon>
+            <span *ngIf="product.rating?.count">({{product.rating.count}})</span>
+          </div>
+        </div>
       </mat-card-content>
-      <button mat-button color="primary" (click)="addToCart(product)">Agregar al carrito</button>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="addToCart(product)">
+          <mat-icon>add_shopping_cart</mat-icon> Agregar
+        </button>
+        <button mat-stroked-button color="accent" (click)="showProductDetails(product)">
+          <mat-icon>info</mat-icon> Detalles
+        </button>
+      </mat-card-actions>
     </mat-card>
   </div>
 
-  <!-- Controles de paginación al final -->
-  <div class="pagination-container">
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  <!-- Controles de paginación -->
+  <div *ngIf="filteredProducts.length > pageSize" class="pagination-container">
+    <pagination-controls
+      (pageChange)="page = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      screenReaderPaginationLabel="Paginación"
+      screenReaderPageLabel="Página"
+      screenReaderCurrentLabel="Estás en la página">
+    </pagination-controls>
   </div>
 
-  <!-- Enlace a la página del carrito -->
-  <div class="cart-link">
-    <a routerLink="/cart">🛒 Ver carrito</a>
+  <!-- Carrito flotante -->
+  <div class="floating-cart" [class.has-items]="cartItemCount > 0" (click)="navigateToCart()">
+    <mat-icon>shopping_cart</mat-icon>
+    <span class="cart-count" *ngIf="cartItemCount > 0">{{cartItemCount}}</span>
   </div>
-  <!-- Enlace a la página del carrito -->
-<div class="cart-link">
-    <a routerLink="/cart" class="cart-button">🛒 Ver carrito</a>
-  </div>
+</div>
